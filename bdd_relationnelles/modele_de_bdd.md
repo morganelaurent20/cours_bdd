@@ -204,6 +204,9 @@ La colonne school_id dans Student est la clé étrangère qui capture la relatio
 
 - Identifier d’abord les entités principales et leurs attributs obligatoires.  
 - Définir les relations et leur cardinalité (1‑1, 1‑n, n‑n) puis décider d’implémentation (clé étrangère ou table d’association).  
+
+<img src="images/types_relations.png" alt="Relations" width="400" style="max-width:100%;height:auto;"> 
+
 - Pour éviter l’encombrement visuel, utiliser la représentation tabulaire quand une entité a beaucoup d’attributs.
 
 ---
