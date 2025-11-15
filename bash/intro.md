@@ -6,7 +6,22 @@ Différentes méthodes pour accéder à un terminal Bash selon que vous utilisez
 
 ---
 
-### 0.1. Utilisateurs Windows
+### 0.1. Utiliser github codespaces
+Conditions:
+ - avoir un compte GitHub 
+ - utiliser un dépôt compatible
+
+Depuis un dépôt GitHub : 
+ - Va sur n’importe quel dépôt (le tien ou un public).
+ - Clique sur le bouton <> Code.
+ - Sélectionne l’onglet Codespaces.
+ - Clique sur Create codespace on main (ou sur une autre branche si tu préfères).
+
+<img width="203" height="165" alt="image" src="https://github.com/user-attachments/assets/80105ae4-a205-47d8-9b97-ae7c461b2932" />
+
+---
+
+### 0.2. Utilisateurs Windows
 Option recommandée : **WSL (Windows Subsystem for Linux)**
 WSL permet d'exécuter une distribution Linux directement dans Windows.
 
@@ -21,7 +36,7 @@ WSL permet d'exécuter une distribution Linux directement dans Windows.
 
 ---
 
-### 0.2. Utilisateurs macOS
+### 0.3. Utilisateurs macOS
 macOS est basé sur Unix, donc Bash est accessible nativement.
 
 Accès au terminal
@@ -39,7 +54,7 @@ chsh -s /bin/bash
 ---
 
 
-### 0.3. Utilisateurs Linux
+### 0.4. Utilisateurs Linux
 Linux dispose nativement d’un terminal Bash.
 
 Accès
@@ -47,20 +62,6 @@ Ouvrir le terminal via le raccourci clavier (Ctrl + Alt + T) ou via le menu
 
 Bash est généralement le shell par défaut
 
----
-
-### 0.4. Utiliser github codespaces
-Conditions:
- - avoir un compte GitHub 
- - utiliser un dépôt compatible
-
-Depuis un dépôt GitHub : 
- - Va sur n’importe quel dépôt (le tien ou un public).
- - Clique sur le bouton <> Code.
- - Sélectionne l’onglet Codespaces.
- - Clique sur Create codespace on main (ou sur une autre branche si tu préfères).
-
-<img width="203" height="165" alt="image" src="https://github.com/user-attachments/assets/80105ae4-a205-47d8-9b97-ae7c461b2932" />
 
 ---
 
