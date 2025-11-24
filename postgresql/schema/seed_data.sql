@@ -28,38 +28,40 @@ INSERT INTO produits (nom, famille, categorie, prix, stock) VALUES
 ('Nintendo Switch 2', 'Console', 'Gaming', 399.99, 50),
 ('Yamaha HS7', 'Enceinte', 'Son', 299.99, 12);
 
--- Insertion de commandes
-INSERT INTO commandes (client_id, statut) VALUES
-(1, 'expédiée'),
-(2, 'en cours'),
-(1, 'en cours'),
-(4, 'expédiée'),
-(5, 'en cours'),
-(6, 'expédiée'),
-(7, 'en cours'),
-(8, 'expédiée'),
-(9, 'en cours'),
-(10, 'expédiée'),
-(2, 'expédiée'),
-(3, 'en cours'),
-(1, 'expédiée'),
-(5, 'en cours'),
-(6, 'expédiée'),
-(7, 'en cours'),
-(8, 'expédiée'),
-(9, 'en cours'),
-(10, 'expédiée'),
-(4, 'en cours'),
-(2, 'expédiée'),
-(5, 'en cours'),
-(6, 'expédiée'),
-(7, 'en cours'),
-(8, 'expédiée'),
-(9, 'en cours'),
-(10, 'expédiée'),
-(4, 'en cours'),
-(2, 'expédiée'),
-(1, 'expédiée');  
+
+-- Insertion de commandes avec dates
+INSERT INTO commandes (client_id, date_commande, statut) VALUES
+(1, '2025-11-01 10:15:00', 'expédiée'),
+(2, '2025-11-02 14:30:00', 'en cours'),
+(1, '2025-11-03 09:45:00', 'en cours'),
+(4, '2025-11-04 16:20:00', 'expédiée'),
+(5, '2025-11-05 11:10:00', 'en cours'),
+(6, '2025-11-06 13:55:00', 'expédiée'),
+(7, '2025-11-07 15:40:00', 'en cours'),
+(8, '2025-11-08 17:25:00', 'expédiée'),
+(9, '2025-11-09 12:05:00', 'en cours'),
+(10, '2025-11-10 18:45:00', 'expédiée'),
+(2, '2025-11-11 09:30:00', 'expédiée'),
+(3, '2025-11-12 14:15:00', 'en cours'),
+(1, '2025-11-13 10:50:00', 'expédiée'),
+(5, '2025-11-14 16:00:00', 'en cours'),
+(6, '2025-11-15 11:35:00', 'expédiée'),
+(7, '2025-11-16 13:20:00', 'en cours'),
+(8, '2025-11-17 15:05:00', 'expédiée'),
+(9, '2025-11-18 17:50:00', 'en cours'),
+(10, '2025-11-19 12:25:00', 'expédiée'),
+(4, '2025-11-20 14:10:00', 'en cours'),
+(2, '2025-11-21 09:55:00', 'expédiée'),
+(5, '2025-11-22 11:40:00', 'en cours'),
+(6, '2025-11-23 13:25:00', 'expédiée'),
+(7, '2025-11-24 15:10:00', 'en cours'),
+(8, '2025-11-25 17:55:00', 'expédiée'),
+(9, '2025-11-26 12:30:00', 'en cours'),
+(10, '2025-11-27 18:15:00', 'expédiée'),
+(4, '2025-11-28 10:00:00', 'en cours'),
+(2, '2025-11-29 14:45:00', 'expédiée'),
+(1, '2025-11-30 09:20:00', 'expédiée');
+
 
 -- Insertion de lignes de commande
 INSERT INTO lignes_commandes (commande_id, produit_id, quantite, prix_unitaire) VALUES
