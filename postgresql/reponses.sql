@@ -37,6 +37,89 @@ WHERE nom NOT LIKE  'Dupont';
 
 -- JOINTURES 
 
+-- INNER JOIN : clients et commandes
 -- Lister toutes les commandes de Bob Martin
-SELECT * FROM clients c INNER JOIN commandes o ON c.client_id = o.client_id
+SELECT c.nom, c.email, o.commande_id, o.date_commande, o.statut 
+FROM clients c INNER JOIN commandes o ON c.client_id = o.client_id
 WHERE c.nom LIKE 'Bob Martin';
+
+
+-- LEFT JOIN : tous les clients, même sans commande
+SELECT c.nom, c.email, co.commande_id
+FROM clients c
+LEFT JOIN commandes co ON c.client_id = co.client_id;
+
+-- Jointure multiple : commandes et produits
+SELECT co.commande_id, c.nom AS client, p.nom AS produit, lc.quantite
+FROM commandes co
+INNER JOIN clients c ON co.client_id = c.client_id
+INNER JOIN lignes_commandes lc ON co.commande_id = lc.commande_id
+INNER JOIN produits p ON lc.produit_id = p.produit_id;
+
+-- FULL OUTER JOIN : clients et commandes
+SELECT c.nom, co.commande_id
+FROM clients c
+FULL OUTER JOIN commandes co ON c.client_id = co.client_id;
+
+-- CROSS JOIN : produit cartésien
+SELECT c.nom, p.nom
+FROM clients c
+CROSS JOIN produits p;
+
+
+-- Exercices pratiques
+
+
+-- Affiche la liste des clients avec leurs commandes (même ceux qui n’ont pas de commande).
+SELECT c.nom, c.email, co.commande_id
+FROM clients c
+LEFT JOIN commandes co ON c.client_id = co.client_id;
+
+-- Affiche toutes les commandes avec le nom du client et leur statut.
+SELECT co.commande_id, c.nom, co.statut
+FROM commandes co
+INNER JOIN clients c on co.client_id = c.client_id;
+
+-- Affiche les produits commandés par "Alice Dupont".
+SELECT c.nom, c.email, p.nom 
+FROM commandes co
+INNER JOIN clients c ON co.client_id = c.client_id
+INNER JOIN lignes_commandes lc ON co.commande_id = lc.commande_id
+INNER JOIN produits p ON lc.produit_id = p.produit_id
+WHERE c.nom LIKE 'Alice Dupont';
+
+-- Affiche les clients qui n’ont jamais passé de commande.
+SELECT co.commande_id, c.nom
+FROM commandes co
+INNER JOIN clients c on co.client_id = c.client_id
+WHERE co.commande_id IS NULL;
+
+-- Affiche toutes les commandes avec les produits associés et la quantité commandée.
+SELECT co.commande_id, p.nom AS produit, lc.quantite
+FROM commandes co
+INNER JOIN clients c ON co.client_id = c.client_id
+INNER JOIN lignes_commandes lc ON co.commande_id = lc.commande_id
+INNER JOIN produits p ON lc.produit_id = p.produit_id;
+
+-- Affiche les clients et les produits qu’ils ont commandés, en utilisant une jointure multiple.
+SELECT c.nom AS client, p.nom AS produit
+FROM commandes co
+INNER JOIN clients c ON co.client_id = c.client_id
+INNER JOIN lignes_commandes lc ON co.commande_id = lc.commande_id
+INNER JOIN produits p ON lc.produit_id = p.produit_id;
+
+-- Affiche toutes les commandes, même celles sans client (test avec FULL OUTER JOIN).
+SELECT c.nom, co.commande_id
+FROM clients c
+FULL OUTER JOIN commandes co ON c.client_id = co.client_id;
+
+-- Affiche toutes les combinaisons possibles entre clients et produits (CROSS JOIN).
+SELECT c.nom, p.nom
+FROM clients c
+CROSS JOIN produits p;
+
+-- Affiche les clients qui ont commandé au moins deux produits différents.
+
+
+-- Affiche les produits qui n’ont jamais été commandés.
+
