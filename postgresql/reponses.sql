@@ -184,9 +184,17 @@ group by commande_id;
 
 --Afficher le client qui a passé le plus de commandes.
 SELECT c.nom, COUNT(co.commande_id) AS nb_commandes
-FROM commandes co 
-INNER JOIN clients c ON c.client_id = co.client_id
-GROUP BY c.nom;
+FROM commandes co
+JOIN clients c ON c.client_id = co.client_id
+GROUP BY c.nom
+HAVING COUNT(co.commande_id) = (
+    SELECT MAX(nb)
+    FROM (
+        SELECT COUNT(*) AS nb
+        FROM commandes
+        GROUP BY client_id
+    ) AS t
+);
 
 --Calculer la somme des stocks disponibles par famille de produits.
 SELECT p.nom, sum(lc.quantite) AS nb_stock
