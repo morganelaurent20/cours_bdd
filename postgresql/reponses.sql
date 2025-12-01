@@ -33,3 +33,10 @@ WHERE date_inscription BETWEEN '2024-01-01' AND '2024-03-31';
 --Affiche les clients dont le nom est différent de "Dupont".
 SELECT * FROM clients
 WHERE nom NOT LIKE  'Dupont';
+
+
+-- JOINTURES 
+
+-- Lister toutes les commandes de Bob Martin
+SELECT * FROM clients c INNER JOIN commandes o ON c.client_id = o.client_id
+WHERE c.nom LIKE 'Bob Martin';
