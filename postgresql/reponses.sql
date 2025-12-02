@@ -268,3 +268,139 @@ FROM lignes_commandes lc
 INNER JOIN produits p ON lc.produit_id = p.produit_id
 GROUP BY p.nom
 HAVING SUM(lc.quantite) < 50;
+
+-- Les sous‑requêtes (subqueries)
+
+-- Exemples pratiques
+-- a) Clients ayant passé au moins une commande
+SELECT nom, email
+FROM clients
+WHERE client_id IN (
+    SELECT client_id
+    FROM commandes
+);
+
+--b) Produits dont le prix est supérieur au prix moyen
+SELECT nom, prix
+FROM produits
+WHERE prix > (
+    SELECT AVG(prix) FROM produits
+);
+
+-- c) Nombre de commandes par client (sous‑requête dans SELECT)
+SELECT c.nom,
+       (SELECT COUNT(*) FROM commandes co WHERE co.client_id = c.client_id) AS nb_commandes
+FROM clients c;
+
+
+--L’opérateur CASE
+
+--2. Exemples pratiques
+--a) Catégoriser les produits selon leur prix
+SELECT nom,
+       prix,
+       CASE
+           WHEN prix < 20 THEN 'Bon marché'
+           WHEN prix BETWEEN 20 AND 100 THEN 'Moyen'
+           ELSE 'Cher'
+       END AS categorie_prix
+FROM produits;
+
+--b) Traduire le statut des commandes
+SELECT commande_id,
+       statut,
+       CASE statut
+           WHEN 'en cours' THEN 'Commande en préparation'
+           WHEN 'livrée' THEN 'Commande terminée'
+           WHEN 'annulée' THEN 'Commande annulée'
+           ELSE 'Statut inconnu'
+       END AS statut_detail
+FROM commandes;
+
+--c) Vérifier si un client a renseigné son email
+SELECT nom,
+       CASE
+           WHEN email IS NULL THEN 'Email manquant'
+           ELSE 'Email renseigné'
+       END AS info_email
+FROM clients;
+
+--Exercices pratiques
+
+--Afficher les produits dont le prix est supérieur au prix moyen (sous‑requête).
+SELECT nom, prix
+FROM produits
+WHERE prix > (
+    SELECT AVG(prix) FROM produits
+);
+
+--Afficher les clients qui ont passé au moins deux commandes (sous‑requête avec COUNT).
+SELECT c.nom, COUNT(co.commande_id) AS nb_commandes
+FROM clients c
+INNER JOIN commandes co on co.client_id = c.client_id
+WHERE (SELECT COUNT(*) FROM commandes co WHERE co.client_id = c.client_id) > 1
+GROUP BY c.nom;
+
+--Afficher les commandes avec une colonne supplémentaire indiquant si elles sont "récentes" (après 2025‑01‑01) ou "anciennes" (avant).
+SELECT commande_id,
+       date_commande,
+       CASE 
+           WHEN date_commande > '2025-01-01'::date THEN 'récentes'
+           ELSE 'anciennes'
+       END AS ancienneté
+FROM commandes;
+
+--Catégoriser les produits en trois classes de prix : bas, moyen, élevé (avec CASE).
+SELECT nom,
+      prix,
+      CASE
+          WHEN prix < 20 THEN 'bas'
+          WHEN prix BETWEEN 20 AND 100 THEN 'Moyen'
+          ELSE 'élevé'
+      END AS categorie_prix
+FROM produits;
+
+--Afficher les clients avec une colonne indiquant "nouveau" si inscrits après 2024, sinon "ancien".
+SELECT client_id,
+       date_inscription,
+       CASE 
+           WHEN EXTRACT(YEAR FROM date_inscription) > 2024 THEN 'nouveau'
+           ELSE 'ancien'
+       END AS ancienneté
+FROM clients;
+
+
+--Afficher les produits commandés et ajouter une colonne "stock critique" si le stock est inférieur à 5.
+SELECT p.produit_id, p.nom, 
+       SUM(lc.quantite) AS stock, 
+       CASE 
+           WHEN SUM(lc.quantite) < 5 THEN 'Stock critique'
+           ELSE 'Stock suffisant'
+       END AS stock_critique
+FROM commandes co
+INNER JOIN clients c ON co.client_id = c.client_id
+INNER JOIN lignes_commandes lc ON co.commande_id = lc.commande_id
+INNER JOIN produits p ON lc.produit_id = p.produit_id
+GROUP BY p.produit_id;
+
+--Utiliser une sous‑requête pour afficher le produit le plus cher commandé par chaque client.
+SELECT c.nom, p.prix, p.nom
+FROM commandes co
+INNER JOIN clients c ON co.client_id = c.client_id
+INNER JOIN lignes_commandes lc ON co.commande_id = lc.commande_id
+INNER JOIN produits p ON lc.produit_id = p.produit_id
+WHERE (c.client_id, p.prix) IN (
+    SELECT co2.client_id, MAX(p2.prix)
+    FROM commandes co2
+    JOIN lignes_commandes lc2 ON co2.commande_id = lc2.commande_id
+    INNER JOIN produits p2 ON lc2.produit_id = p2.produit_id
+    GROUP BY co2.client_id
+);
+
+--Afficher les commandes avec une colonne "statut détaillé" traduite en français (avec CASE).
+
+
+--Afficher les clients qui n’ont jamais passé de commande (sous‑requête avec NOT IN).
+
+
+--Afficher les lignes de commande avec une colonne calculée "montant_total" et une classification : "petite commande" (<50), "moyenne" (50‑200), "grande" (>200)
