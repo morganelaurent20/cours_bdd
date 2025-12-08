@@ -11,7 +11,7 @@
 --     titre VARCHAR(255) NOT NULL,
 --     annee_publication INT,
 --     auteur_id INT REFERENCES auteur(id)
---         ON DELETE SET NULL
+--         ON DELETE SET NULL -- si l'auteur n'existe plus on met NULL
 -- );
 
 -- -- Table departement
@@ -32,20 +32,26 @@
 -- -- Table emprunt
 -- CREATE TABLE emprunt (
 --     id SERIAL PRIMARY KEY,
---     date_debut DATE,
+--     date_debut DATE NOT NULL,
 --     date_retour DATE,
 --     etudiant_id INT REFERENCES etudiant(id)
---         ON DELETE SET NULL,
+--         ON DELETE CASCADE,
 --     livre_id INT REFERENCES livre(id)
---         ON DELETE SET NULL
+--         ON DELETE CASCADE
 -- );
 
+-- Insertion dans auteur
 INSERT INTO auteur (nom) VALUES
 ('Victor Hugo'),
 ('Jane Austen'),
 ('Albert Camus');
 
+SELECT * FROM auteur;
+
+-- Insertion dans livre
 INSERT INTO livre (titre, annee_publication, auteur_id) VALUES
-('Victor Hugo'),
-('Jane Austen'),
-('Albert Camus');
+('Les Miserables', 1862, 1),
+('Pride and Prejudice', 1813, 2),
+('L Etranger', 1942, 3);
+
+SELECT * FROM livre;
